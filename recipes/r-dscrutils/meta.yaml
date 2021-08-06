@@ -1,0 +1,58 @@
+{% set name = "r-dscrutils" %}
+{% set version = '0.4.3' %}
+
+package:
+  name: {{ name|lower }}
+  version: {{version}}
+
+source:
+  url: https://github.com/stephenslab/dsc/archive/v{{ version }}.tar.gz
+  sha256: 1e422b88cc40269cb973a2b4bd12441a68f14d3c3df6f4aefb0f82de39aa1d1f
+
+build:
+  noarch: generic
+  number: 0
+  rpaths:
+    - lib/R/lib/
+    - lib/
+  script: "$R CMD INSTALL --build dscrutils/"
+
+requirements:
+  host:
+    - r-base
+    - r-reticulate
+    - r-yaml
+    - r-data.table
+    - r-progress
+    - r-r6
+    - r-digest
+
+  run:
+    - r-base
+    # Install reticulate via conda to avoid DSC installing it from CRAN
+    # https://github.com/stephenslab/dsc/blob/fb5710445306f287bb4ddbcc9625818d71ab94d2/dscrutils/R/utils.R#L29
+    - r-reticulate
+    - r-yaml
+    - r-data.table
+    - r-progress
+    - r-r6
+    - r-digest
+
+test:
+  commands:
+    - $R -e "library('dscrutils')"
+
+about:
+  home: https://github.com/stephenslab/dsc
+  license: MIT
+  summary: Various R functions for interacting with and analyzing the
+    results of a Dynamic Statistical Comparison (DSC) experiment.
+  license_family: MIT
+  doc_url: https://stephenslab.github.io/dsc-wiki/
+  dev_url: https://github.com/stephenslab/dsc/dscrutils
+
+extra:
+  recipe-maintainers:
+    # GitHub IDs for maintainers of the recipe.
+    # Always check before adding maintainers of a recipe. (There will be spam!)
+    - aryarm

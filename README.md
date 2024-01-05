@@ -1,4 +1,6 @@
 # aryarm-conda
+[<img src=https://github.com/codespaces/badge.svg width=160>](https://codespaces.new/aryarm/aryarm-conda)
+
 Scripts, recipes, and docs for conda packages. Inspired by [jdblischak/jdb-conda](https://github.com/jdblischak/jdb-conda).
 
 To build a local version of a package in this repository:

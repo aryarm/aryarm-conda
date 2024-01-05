@@ -13,15 +13,22 @@ To build a local version of a package in this repository:
     conda create -y -n biobuild -c conda-forge -c bioconda bioconda-utils
     conda activate biobuild
     ```
-3. Build the package
+4. Verify that your `~/.condarc` file contains the following:
+   ```
+   channels:
+     - conda-forge
+     - bioconda
+     - defaults
+   ```
+5. Build the package
     ```
     bioconda-utils build --packages PACKAGE
     ```
-4. Install the package in a new environment
+6. Install the package in a new environment
     ```
     conda create -y -n PACKAGE -c conda-forge -c bioconda -c file://${CONDA_PREFIX}/conda-bld/ PACKAGE
     ```
-5. Activate the new environment
+7. Activate the new environment
     ```
     conda activate PACKAGE
     ```

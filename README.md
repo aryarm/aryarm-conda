@@ -17,7 +17,11 @@ To build a local version of a package in this repository:
     ```
     bioconda-utils build --packages PACKAGE
     ```
-4. Install the package
+4. Install the package in a new environment
     ```
-    conda install --use-local PACKAGE
+    conda create -y -n PACKAGE -c conda-forge -c bioconda -c file://${CONDA_PREFIX}/conda-bld/ PACKAGE
+    ```
+5. Activate the new environment
+    ```
+    conda activate PACKAGE
     ```

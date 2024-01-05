@@ -18,7 +18,7 @@ To build a local version of a package in this repository:
    channels:
      - conda-forge
      - bioconda
-     - defaults
+     - nodefaults
    ```
 5. Build the package
     ```

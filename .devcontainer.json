@@ -18,7 +18,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "mamba env create -y -n biobuild -c conda-forge -c bioconda bioconda-utils",
+	"postCreateCommand": "conda config --add channels defaults && conda config --add channels bioconda && conda config --add channels conda-forge && mamba env create -y -n biobuild -c conda-forge -c bioconda bioconda-utils",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -29,6 +29,7 @@
 				"python.defaultInterpreterPath": "/opt/conda/envs/biobuild/bin/python",
 				"python.terminal.activateEnvironment": true,
 				"python.terminal.activateEnvInCurrentTerminal": true,
+				"python.venvFolders": ["/opt/conda/envs"],
 				"terminal.integrated.environmentChangesRelaunch": true,
 				"terminal.integrated.hideOnStartup": "always"
 			}

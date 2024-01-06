@@ -23,17 +23,22 @@ To build a local version of a package in this repository:
 3. Install bioconda-utils in a new environment
     ```
     conda create -y -n biobuild bioconda-utils
+    ```
+4. Activate the new environment
+    ```
     conda activate biobuild
     ```
-4. Build the package
+5. Build the package
     ```
     bioconda-utils build --packages PACKAGE
     ```
-5. Install the package in a new environment
+6. Install the package in a new environment
     ```
     conda create -y -n PACKAGE -c file://${CONDA_PREFIX}/conda-bld/ PACKAGE
     ```
-6. Activate the new environment
+7. Activate the new environment
     ```
     conda activate PACKAGE
     ```
+
+For maximum reproducibility, consider doing these steps within [a GitHub codespace](https://codespaces.new/aryarm/aryarm-conda). This will also allow you to skip steps 1-3.

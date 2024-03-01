@@ -16,6 +16,7 @@ To build a local version of a package in this repository:
      - conda-forge
      - bioconda
      - nodefaults
+   channel_priority: strict
    ```
    ```
    vim ~/.condarc

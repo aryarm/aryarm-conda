@@ -48,6 +48,13 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
 
+      - name: Confirm package needs to be rebuilt
+        uses: actions/cache@v4
+        with:
+          key:
+            ${{ runner.os }}-${{ runner.arch }}-${{ steps.get-date.outputs.today }}-${{ ${{ recipes/hashFiles(matrix.packagename)/** }}
+        id: rebuild-cache-check
+
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -70,15 +77,16 @@ jobs:
           key:
             conda-${{ runner.os }}--${{ runner.arch }}--${{ steps.get-date.outputs.today }}-${{ env.CACHE_NUMBER }}
         env:
-          # Increase this value to reset cache if dev-env.yml has not changed
+          # Increase this value to reset cache if needed
           CACHE_NUMBER: 0
         id: cache
 
-      - name: Install dev environment
+      - name: Install biobuild environment
+        shell: bash -el {0}
         run:
           mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils
         if: steps.cache.outputs.cache-hit != 'true'
-      
+
       - name: Run test
         shell: bash -el {0}
         run: |

@@ -53,6 +53,7 @@ jobs:
         with:
           activate-environment: biobuild
           miniforge-variant: Mambaforge
+          channels: conda-forge,bioconda,defaults
           auto-activate-base: false
           miniforge-version: latest
           use-mamba: true
@@ -84,7 +85,7 @@ jobs:
           bioconda-utils build --packages ${{ matrix.packagename }}
 
       - name: Upload built package
-        uses: "actions/upload-artifact@v3"
+        uses: "actions/upload-artifact@v4"
         with:
           name: ${{ matrix.packagename }}
-          path: "${CONDA_PREFIX}/conda-bld/"
+          path: ${{ env.CONDA }}/envs/biobuild/conda-bld/

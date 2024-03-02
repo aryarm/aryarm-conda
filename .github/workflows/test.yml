@@ -40,7 +40,7 @@ jobs:
         id: output-dirs
         # adapted from https://stackoverflow.com/a/71687652
         run: |
-          matrix=$(for i in ${{ steps.filter.outputs.changed_files }}; do sed 's\recipes/\\;s\/.*$\\' <<< $i; done | sort -u | jq --raw-input --slurp --compact-output 'split("/\n")[:-1]')
+          matrix=$(for i in ${{ steps.filter.outputs.changed_files }}; do sed 's\recipes/\\;s\/.*$\\' <<< $i; done | sort -u | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')
           echo "$matrix"
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
 

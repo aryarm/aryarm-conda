@@ -30,6 +30,7 @@ requirements:
   run:
     - r-base
     # Install reticulate via conda to avoid DSC installing it from CRAN
+    # FORCE REBUILD
     # https://github.com/stephenslab/dsc/blob/fb5710445306f287bb4ddbcc9625818d71ab94d2/dscrutils/R/utils.R#L29
     - r-reticulate
     - r-yaml

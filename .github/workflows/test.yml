@@ -50,6 +50,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+    if: ${{ needs.get_dirs.outputs.matrix != '[]' }}
     strategy:
       fail-fast: false
       matrix:

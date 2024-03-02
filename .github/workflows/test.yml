@@ -17,6 +17,8 @@ jobs:
   get_dirs:
     name: Get directory names
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
     strategy:
       fail-fast: false
     outputs:
@@ -25,11 +27,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: List changed packages
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          list-files: shell
+          filters: |
+            changed:
+              - added|modified: 'recipes/**'
+
       - name: get directory names
         id: output-dirs
         # adapted from https://stackoverflow.com/a/71687652
         run: |
-          matrix=$(cd recipes && ls -d */ | jq --raw-input --slurp --compact-output 'split("/\n")[:-1]')
+          matrix=$(for i in ${{ steps.filter.outputs.changed_files }}; do sed 's\recipes/\\;s\/.*$\\' <<< $i; done | sort -u | paste -s | jq --raw-input --slurp --compact-output 'split("/\n")[:-1]')
           echo "$matrix"
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
@@ -47,13 +58,6 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
-
-      - name: Confirm package needs to be rebuilt
-        uses: actions/cache@v4
-        with:
-          key:
-            ${{ runner.os }}-${{ runner.arch }}-${{ steps.get-date.outputs.today }}-${{ ${{ recipes/hashFiles(matrix.packagename)/** }}
-        id: rebuild-cache-check
 
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v3

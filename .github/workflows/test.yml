@@ -1,0 +1,104 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
+    paths-ignore:
+      - 'README.md'
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore:
+      - 'README.md'
+
+jobs:
+  # adapted from https://docs.github.com/en/actions/learn-github-actions/expressions#example-returning-a-json-object
+  get_dirs:
+    name: List changed recipes
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    strategy:
+      fail-fast: false
+    outputs:
+      matrix: ${{ steps.output-dirs.outputs.matrix }} # contains a list of the module names encoded as a json array
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: List changed packages
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          list-files: shell
+          filters: |
+            changed:
+              - added|modified: 'recipes/**'
+
+      - name: get directory names
+        id: output-dirs
+        # adapted from https://stackoverflow.com/a/71687652
+        run: |
+          matrix=$(for i in ${{ steps.filter.outputs.changed_files }}; do sed 's\recipes/\\;s\/.*$\\' <<< $i; done | sort -u | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')
+          echo "$matrix"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  build-and-push:
+    needs: get_dirs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    if: ${{ needs.get_dirs.outputs.matrix != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        packagename: ${{ fromJson(needs.get_dirs.outputs.matrix) }}
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Setup Mambaforge
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: biobuild
+          miniforge-variant: Mambaforge
+          channels: conda-forge,bioconda,defaults
+          auto-activate-base: false
+          miniforge-version: latest
+          use-mamba: true
+
+      - name: Get Date
+        id: get-date
+        run: echo "today=$(/bin/date -u '+%Y%m%d')" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Cache Conda env
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CONDA }}/envs
+          key:
+            conda-${{ runner.os }}--${{ runner.arch }}--${{ steps.get-date.outputs.today }}-${{ env.CACHE_NUMBER }}
+        env:
+          # Increase this value to reset cache if needed
+          CACHE_NUMBER: 0
+        id: cache
+
+      - name: Install biobuild environment
+        shell: bash -el {0}
+        run:
+          mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      - name: Run test
+        shell: bash -el {0}
+        run: |
+          bioconda-utils build --packages ${{ matrix.packagename }}
+
+      - name: Upload built package
+        uses: "actions/upload-artifact@v4"
+        with:
+          name: ${{ matrix.packagename }}
+          path: ${{ env.CONDA }}/envs/biobuild/conda-bld/

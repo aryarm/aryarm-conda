@@ -15,7 +15,7 @@ on:
 jobs:
   # adapted from https://docs.github.com/en/actions/learn-github-actions/expressions#example-returning-a-json-object
   get_dirs:
-    name: Get directory names
+    name: List changed recipes
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read

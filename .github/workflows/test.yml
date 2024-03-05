@@ -89,7 +89,7 @@ jobs:
       - name: Install biobuild environment
         shell: bash -el {0}
         run:
-          mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils
+          mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils anaconda-client
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Run test
@@ -102,3 +102,11 @@ jobs:
         with:
           name: ${{ matrix.packagename }}
           path: ${{ env.CONDA }}/envs/biobuild/conda-bld/
+
+#      - name: Upload built package to Anaconda
+#        shell: bash -el {0}
+#        env:
+#          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+#        if: ${{ env.ANACONDA_API_TOKEN == '' }}
+#        run: |
+#          anaconda upload ${{ env.CONDA }}/envs/biobuild/conda-bld/linux-64/*.tar.bz2

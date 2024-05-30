@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/weizhou0/qtl/archive/{{ vcommit }}.tar.gz
-  sha256: a1a0f33f739d6f38eab3f0d5c0a21cfd4bc279f2a126e367dfb18289ed353060
+  sha256: 63e2143bc301563c480d1570e1d090a29239f130b89334303347a53a5efb7f9a
   patches:
     - patches/0001-use-shared-libs-in-makevars.patch
 

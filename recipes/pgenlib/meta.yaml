@@ -11,7 +11,6 @@ source:
 
 build:
   number: 0
-  skip: True  # [py < 37]
   script: "{{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation"
   run_exports:
     - {{ pin_subpackage('pgenlib', max_pin="x.x") }}
@@ -24,11 +23,10 @@ requirements:
     - pip
     - cython
     - numpy >=2.0.0  # [py >= 39]
-    - numpy >=1.16.0,<2.0.0  # [py < 39]
+    - numpy >=1.19.0,<2.0.0  # [py < 39]
     - zlib
   run:
     - python
-    - {{ pin_compatible('numpy') }}
 
 test:
   imports:

@@ -1,7 +1,0 @@
-numpy:
-  # part of a zip_keys: python, python_impl, numpy
-  - 1.22
-  - 2.0
-  - 2.0
-  - 2.0
-  - 2.0

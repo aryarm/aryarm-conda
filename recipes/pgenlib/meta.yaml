@@ -22,11 +22,12 @@ requirements:
     - python
     - pip
     - cython
-    - numpy
+    - numpy >=2.0 # [py>38]
+    - numpy # [py<39]
     - zlib
   run:
     - python
-    - {{ pin_compatible('numpy') }} # [py<39]
+    - {{ pin_compatible('numpy') }}
 
 test:
   imports:

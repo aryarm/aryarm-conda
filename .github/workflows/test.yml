@@ -103,10 +103,11 @@ jobs:
           name: ${{ matrix.packagename }}
           path: ${{ env.CONDA }}/envs/biobuild/conda-bld/
 
-#      - name: Upload built package to Anaconda
-#        shell: bash -el {0}
-#        env:
-#          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
-#        if: ${{ env.ANACONDA_API_TOKEN == '' }}
-#        run: |
-#          anaconda upload ${{ env.CONDA }}/envs/biobuild/conda-bld/linux-64/*.tar.bz2
+      - name: Upload built package to Anaconda
+        uses: MichaelsJP/conda-package-publish-action@v1.0.0
+        with:
+          subDir: 'recipes/${{ matrix.packagename }}'
+          AnacondaToken: ${{ secrets.ANACONDA_TOKEN }}
+          platforms: 'linux-ppc64'
+          override: true
+          dry_run: ${{ github.ref == 'refs/heads/master' }}

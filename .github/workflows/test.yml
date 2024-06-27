@@ -107,7 +107,7 @@ jobs:
         uses: MichaelsJP/conda-package-publish-action@v1.0.0
         with:
           subDir: 'recipes/${{ matrix.packagename }}'
-          AnacondaToken: ${{ secrets.ANACONDA_TOKEN }}
+          AnacondaToken: ${{ secrets.ANACONDA_API_TOKEN }}
           platforms: 'linux-ppc64'
           override: true
           dry_run: ${{ github.ref == 'refs/heads/master' }}

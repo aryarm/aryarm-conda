@@ -101,7 +101,7 @@ jobs:
       - name: Upload built package
         uses: "actions/upload-artifact@v4"
         with:
-          name: ${{ matrix.packagename }}-${{ matrix. }}
+          name: ${{ matrix.packagename }}-${{ matrix.os }}
           path: ${{ env.CONDA }}/envs/biobuild/conda-bld/
 
 #      - name: Upload built package to Anaconda

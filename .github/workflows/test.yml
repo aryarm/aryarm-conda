@@ -46,7 +46,7 @@ jobs:
 
   build-and-push:
     needs: get_dirs
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
       packages: write
@@ -54,6 +54,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, macos-13, macos-latest]
         packagename: ${{ fromJson(needs.get_dirs.outputs.matrix) }}
 
     steps:
@@ -100,7 +101,7 @@ jobs:
       - name: Upload built package
         uses: "actions/upload-artifact@v4"
         with:
-          name: ${{ matrix.packagename }}
+          name: ${{ matrix.packagename }}-${{ matrix.os }}
           path: ${{ env.CONDA }}/envs/biobuild/conda-bld/
 
 #      - name: Upload built package to Anaconda

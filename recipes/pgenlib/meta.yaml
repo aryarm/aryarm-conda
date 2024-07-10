@@ -47,3 +47,6 @@ extra:
     - chrchang
   identifiers:
     - doi:10.1186/s13742-015-0047-8
+  additional-platforms:
+    - linux-aarch64
+    - osx-arm64

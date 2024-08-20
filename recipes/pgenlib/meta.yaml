@@ -23,7 +23,7 @@ requirements:
     - pip
     - cython 
     - numpy >=2.0.0  # [py >= 39]
-    - numpy >=1.17.3  # [py < 39]
+    - numpy  # [py < 39]
     - zlib
   run:
     - python

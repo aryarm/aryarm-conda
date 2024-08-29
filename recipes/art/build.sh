@@ -5,6 +5,7 @@ set -xe
 export CFLAGS="-I$PREFIX/include"
 export LDFLAGS="-L$PREFIX/lib"
 export CPATH=${PREFIX}/include
+export DYLD_LIBRARY_PATH="$PREFIX/lib:$DYLD_LIBRARY_PATH"
 
 mkdir -p $PREFIX/bin
 

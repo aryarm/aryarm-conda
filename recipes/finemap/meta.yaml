@@ -11,7 +11,7 @@ source:
   sha256: 3b1fc6eb3c2ccafd647b32e02d0244495cd0ade9ed7d474606c31ebf6e98b0c9
   {% elif osx %}
   url: http://www.christianbenner.com/finemap_v{{ version }}_MacOSX.tgz
-  sha256: <insert-MacOSX-sha256-here>
+  sha256: e2967e5586347a8ac5cbcddf3c0e41bf8d3e7793875f78b509d07903d17a415b
   {% endif %}
 
 build:

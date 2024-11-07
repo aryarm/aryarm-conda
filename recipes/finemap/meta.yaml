@@ -25,7 +25,8 @@ requirements:
   build:
     - {{ compiler('c') }}
   host: []
-  run: []
+  run:
+    - libgfortran
 
 test:
   commands:

@@ -18,8 +18,8 @@ build:
   binary_relocation: false
   number: 0
   script:
-    - install -Dd ${PREFIX}/bin
-    - install -D -m 755 finemap_v{{ version }}_{{ "x86_64" if linux else "MacOSX" }} ${PREFIX}/bin/finemap
+    - mkdir -p ${PREFIX}/bin
+    - install -m 755 finemap_v{{ version }}_{{ "x86_64" if linux else "MacOSX" }} ${PREFIX}/bin/finemap
 
 requirements:
   build:

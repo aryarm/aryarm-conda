@@ -13,6 +13,8 @@ source:
 
 build:
   number: 0
+  # skip broken osx for now
+  skip: True # [not linux]
   run_exports:
     - {{ pin_subpackage('finemap', max_pin="x") }}
   script:
@@ -22,23 +24,12 @@ build:
 
 requirements:
   build:
-    - {{ compiler('cxx') }}  # Required if any compilation or linking occurs
-  host:
-    - {{ 'gfortran_impl_osx-64' if osx else 'gfortran' }}
-    - zstd
-    - libgcc
-    - openmp
-    - libgomp
-  run:
-    - {{ 'gfortran_impl_osx-64' if osx else 'gfortran' }}
-    - zstd
-    - libgcc
-    - openmp
-    - libgomp
+    - {{ compiler('cxx') }}
+  host: []
+  run: []
 
 test:
   commands:
-    - otool -L ${PREFIX}/bin/finemap # [osx]
     - finemap --help
 
 about:

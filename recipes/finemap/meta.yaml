@@ -36,12 +36,12 @@ requirements:
     - gfortran 
     - zstd
     - libgcc-ng
-    - libomp
+    - openmp
   run:
     - gfortran
     - zstd
     - libgcc-ng
-    - libomp
+    - openmp
 
 test:
   commands:

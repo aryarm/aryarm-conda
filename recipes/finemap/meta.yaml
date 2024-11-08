@@ -12,6 +12,7 @@ source:
   sha256: e2967e5586347a8ac5cbcddf3c0e41bf8d3e7793875f78b509d07903d17a415b # [osx]
 
 build:
+  binary_relocation: false
   number: 0
   run_exports:
     - {{ pin_subpackage('finemap', max_pin="x") }}

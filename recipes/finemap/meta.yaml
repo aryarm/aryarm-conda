@@ -35,17 +35,17 @@ requirements:
   host:
     - gfortran 
     - zstd
-    - libgcc-ng
+    - libgcc
     - openmp
   run:
     - gfortran
     - zstd
-    - libgcc-ng
+    - libgcc
     - openmp
 
 test:
   commands:
-    - otool -L ${PREFIX}/bin/finemap
+    - otool -L ${PREFIX}/bin/finemap # [osx]
     - finemap --help
 
 about:

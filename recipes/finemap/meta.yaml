@@ -25,12 +25,12 @@ requirements:
   build:
     - {{ compiler('c') }}  # Required if any compilation or linking occurs
   host:
-    - gfortran 
+    - {{ 'gfortran_impl_osx-64' if osx else 'gfortran' }}
     - zstd
     - libgcc
     - openmp
   run:
-    - gfortran
+    - {{ 'gfortran_impl_osx-64' if osx else 'gfortran' }}
     - zstd
     - libgcc
     - openmp

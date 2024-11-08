@@ -22,17 +22,19 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}  # Required if any compilation or linking occurs
+    - {{ compiler('cxx') }}  # Required if any compilation or linking occurs
   host:
     - {{ 'gfortran_impl_osx-64' if osx else 'gfortran' }}
     - zstd
     - libgcc
     - openmp
+    - libgomp
   run:
     - {{ 'gfortran_impl_osx-64' if osx else 'gfortran' }}
     - zstd
     - libgcc
     - openmp
+    - libgomp
 
 test:
   commands:

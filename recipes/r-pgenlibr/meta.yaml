@@ -22,10 +22,10 @@ requirements:
   build:
     - {{ compiler('c') }}              # [not win]
     - {{ compiler('cxx') }}            # [not win]
-    - {{ posix }}autoconf
-    - {{ posix }}automake          # [not win]
-    - {{ posix }}pkg-config
-    - {{ posix }}make
+    - autoconf
+    - automake          # [not win]
+    - pkg-config
+    - make
     - cross-r-base {{ r_base }}    # [build_platform != target_platform]
   host:
     - r-base

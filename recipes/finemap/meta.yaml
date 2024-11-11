@@ -6,28 +6,19 @@ package:
   version: {{ version }}
 
 source:
-  - url: http://www.christianbenner.com/finemap_v{{ version }}_x86_64.tgz # [linux64]
-    sha256: 3b1fc6eb3c2ccafd647b32e02d0244495cd0ade9ed7d474606c31ebf6e98b0c9 # [linux64]
-  - url: http://www.christianbenner.com/finemap_v{{ version }}_MacOSX.tgz # [osx]
-    sha256: e2967e5586347a8ac5cbcddf3c0e41bf8d3e7793875f78b509d07903d17a415b # [osx]
+  - url: http://www.christianbenner.com/finemap_v{{ version }}_x86_64.tgz
+    sha256: 3b1fc6eb3c2ccafd647b32e02d0244495cd0ade9ed7d474606c31ebf6e98b0c9
 
 build:
   number: 0
+  # osx binary cannot be relinked b/c it was built without the -headerpad_max_install_names option
+  skip: True # [not linux64]
+  noarch: generic
   run_exports:
     - {{ pin_subpackage('finemap', max_pin="x") }}
   script:
     - mkdir -p ${PREFIX}/bin
-    - install -m 755 finemap_v{{ version }}_x86_64 ${PREFIX}/bin/finemap # [linux64]
-    {% if osx %}
-    - install -m 755 finemap_v{{ version }}_MacOSX ${PREFIX}/bin/finemap
-    # Use install_name_tool to repackage the binary and update library paths
-    - install_name_tool -headerpad_max_install_names -change /usr/local/lib/libzstd.1.dylib ${PREFIX}/lib/libzstd.1.dylib ${PREFIX}/bin/finemap
-    - install_name_tool -headerpad_max_install_names -change /usr/local/opt/gcc/lib/gcc/10/libgfortran.5.dylib ${PREFIX}/lib/libgfortran.5.dylib ${PREFIX}/bin/finemap
-    - install_name_tool -headerpad_max_install_names -change /usr/local/opt/gcc/lib/gcc/10/libquadmath.0.dylib ${PREFIX}/lib/libquadmath.0.dylib ${PREFIX}/bin/finemap
-    - install_name_tool -headerpad_max_install_names -change /usr/local/opt/gcc/lib/gcc/10/libstdc++.6.dylib ${PREFIX}/lib/libstdc++.6.dylib ${PREFIX}/bin/finemap
-    - install_name_tool -headerpad_max_install_names -change /usr/local/opt/libomp/lib/libomp.dylib ${PREFIX}/lib/libomp.dylib ${PREFIX}/bin/finemap
-    - install_name_tool -headerpad_max_install_names -change /usr/local/lib/gcc/10/libgcc_s.1.dylib ${PREFIX}/lib/libgcc_s.1.dylib ${PREFIX}/bin/finemap
-    {% endif %}
+    - install -m 755 finemap_v{{ version }}_x86_64 ${PREFIX}/bin/finemap
 
 test:
   commands:

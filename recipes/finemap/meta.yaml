@@ -14,14 +14,23 @@ source:
 build:
   number: 0
   # skip broken osx for now
-  skip: True # [not linux64]
+  skip: True # [not linux64 and not osx]
   noarch: generic
   run_exports:
     - {{ pin_subpackage('finemap', max_pin="x") }}
   script:
     - mkdir -p ${PREFIX}/bin
     - install -m 755 finemap_v{{ version }}_x86_64 ${PREFIX}/bin/finemap # [linux64]
-    - install -m 755 finemap_v{{ version }}_MacOSX ${PREFIX}/bin/finemap # [osx]
+    {% if osx %}
+    - install -m 755 finemap_v{{ version }}_MacOSX ${PREFIX}/bin/finemap
+    # Use install_name_tool to repackage the binary and update library paths
+    - $INSTALL_NAME_TOOL -change /usr/local/lib/libzstd.1.dylib ${PREFIX}/lib/libzstd.1.dylib ${PREFIX}/bin/finemap
+    - $INSTALL_NAME_TOOL -change /usr/local/opt/gcc/lib/gcc/10/libgfortran.5.dylib ${PREFIX}/lib/libgfortran.5.dylib ${PREFIX}/bin/finemap
+    - $INSTALL_NAME_TOOL -change /usr/local/opt/gcc/lib/gcc/10/libquadmath.0.dylib ${PREFIX}/lib/libquadmath.0.dylib ${PREFIX}/bin/finemap
+    - $INSTALL_NAME_TOOL -change /usr/local/opt/gcc/lib/gcc/10/libstdc++.6.dylib ${PREFIX}/lib/libstdc++.6.dylib ${PREFIX}/bin/finemap
+    - $INSTALL_NAME_TOOL -change /usr/local/opt/libomp/lib/libomp.dylib ${PREFIX}/lib/libomp.dylib ${PREFIX}/bin/finemap
+    - $INSTALL_NAME_TOOL -change /usr/local/lib/gcc/10/libgcc_s.1.dylib ${PREFIX}/lib/libgcc_s.1.dylib ${PREFIX}/bin/finemap
+    {% endif %}
 
 test:
   commands:

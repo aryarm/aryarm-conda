@@ -21,12 +21,12 @@ build:
     {% if osx %}
     - install -m 755 finemap_v{{ version }}_MacOSX ${PREFIX}/bin/finemap
     # Use install_name_tool to repackage the binary and update library paths
-    - $INSTALL_NAME_TOOL -change /usr/local/lib/libzstd.1.dylib ${PREFIX}/lib/libzstd.1.dylib ${PREFIX}/bin/finemap
-    - $INSTALL_NAME_TOOL -change /usr/local/opt/gcc/lib/gcc/10/libgfortran.5.dylib ${PREFIX}/lib/libgfortran.5.dylib ${PREFIX}/bin/finemap
-    - $INSTALL_NAME_TOOL -change /usr/local/opt/gcc/lib/gcc/10/libquadmath.0.dylib ${PREFIX}/lib/libquadmath.0.dylib ${PREFIX}/bin/finemap
-    - $INSTALL_NAME_TOOL -change /usr/local/opt/gcc/lib/gcc/10/libstdc++.6.dylib ${PREFIX}/lib/libstdc++.6.dylib ${PREFIX}/bin/finemap
-    - $INSTALL_NAME_TOOL -change /usr/local/opt/libomp/lib/libomp.dylib ${PREFIX}/lib/libomp.dylib ${PREFIX}/bin/finemap
-    - $INSTALL_NAME_TOOL -change /usr/local/lib/gcc/10/libgcc_s.1.dylib ${PREFIX}/lib/libgcc_s.1.dylib ${PREFIX}/bin/finemap
+    - install_name_tool -change /usr/local/lib/libzstd.1.dylib ${PREFIX}/lib/libzstd.1.dylib ${PREFIX}/bin/finemap
+    - install_name_tool -change /usr/local/opt/gcc/lib/gcc/10/libgfortran.5.dylib ${PREFIX}/lib/libgfortran.5.dylib ${PREFIX}/bin/finemap
+    - install_name_tool -change /usr/local/opt/gcc/lib/gcc/10/libquadmath.0.dylib ${PREFIX}/lib/libquadmath.0.dylib ${PREFIX}/bin/finemap
+    - install_name_tool -change /usr/local/opt/gcc/lib/gcc/10/libstdc++.6.dylib ${PREFIX}/lib/libstdc++.6.dylib ${PREFIX}/bin/finemap
+    - install_name_tool -change /usr/local/opt/libomp/lib/libomp.dylib ${PREFIX}/lib/libomp.dylib ${PREFIX}/bin/finemap
+    - install_name_tool -change /usr/local/lib/gcc/10/libgcc_s.1.dylib ${PREFIX}/lib/libgcc_s.1.dylib ${PREFIX}/bin/finemap
     {% endif %}
 
 test:

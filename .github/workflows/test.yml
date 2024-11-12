@@ -96,7 +96,7 @@ jobs:
       - name: Run test
         shell: bash -el {0}
         run: |
-          bioconda-utils build --packages ${{ matrix.packagename }}
+           bioconda-utils build ${{ (startsWith(runner.os, 'ubuntu') && '--docker --mulled-test') || ''  }} --packages ${{ matrix.packagename }}
 
       - name: Upload built package as GitHub artifact
         uses: "actions/upload-artifact@v4"

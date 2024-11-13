@@ -19,6 +19,10 @@ build:
     - mkdir -p ${PREFIX}/bin
     - install -m 755 finemap_v{{ version }}_x86_64 ${PREFIX}/bin/finemap
 
+requirements:
+  run:
+    - libgomp
+
 test:
   commands:
     - finemap --help

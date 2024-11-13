@@ -19,26 +19,28 @@ build:
     - mkdir -p ${PREFIX}/bin
     - install -m 755 finemap_v{{ version }}_x86_64 ${PREFIX}/bin/finemap
   missing_dso_whitelist:
-    - $RPATH/libgomp.so.1
+    - /lib64/libdl.so.2
+    - /lib64/libm.so.6
+    - /lib64/libpthread.so.0
+    - /lib64/libc.so.6
+    - /lib64/ld-linux-x86-64.so.2
 
 requirements:
   build:
     - libgomp
-    - libgcc-ng
-    - glibc # Provides libdl, libm, libpthread, libc, ld-linux-x86-64
+    - libgcc
   run:
     - libgomp
-    - libgcc-ng
-    - glibc
+    - libgcc
 
 test:
+  source_files:
+    - example
   commands:
     - finemap --help
     - finemap --sss --in-files example/data
     - finemap --cond --in-files example/data
     - finemap --config --in-files example/data --rsids rs30,rs11
-  source_files:
-    - example
 
 about:
   home: http://www.christianbenner.com

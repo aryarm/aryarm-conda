@@ -20,10 +20,6 @@ build:
     - install -m 755 finemap_v{{ version }}_x86_64 ${PREFIX}/bin/finemap
 
 requirements:
-  build:
-    - {{ stdlib("c") }}
-    - libgomp
-    - libgcc
   run:
     - {{ stdlib("c") }}
     - libgomp

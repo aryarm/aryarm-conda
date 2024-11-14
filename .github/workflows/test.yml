@@ -99,6 +99,7 @@ jobs:
           bioconda-utils build --packages ${{ matrix.packagename }}
 
       - name: Upload built package as GitHub artifact
+        id: artifact-upload
         uses: "actions/upload-artifact@v4"
         with:
           name: ${{ matrix.packagename }}-${{ matrix.os }}
@@ -109,7 +110,7 @@ jobs:
         shell: bash -el {0}
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
-        # if: ${{ (env.ANACONDA_API_TOKEN != '') && (github.ref == 'ref/head/master') }}
-        if: ${{ (env.ANACONDA_API_TOKEN != '') }}
+        # if: ${{ (env.ANACONDA_API_TOKEN != '') && (github.ref == 'ref/head/master') && (steps.artifact-upload.outputs.artifact-id != '') }}
+        if: ${{ (env.ANACONDA_API_TOKEN != '') && (steps.artifact-upload.outputs.artifact-id != '') }}
         run: |
-          anaconda upload ${{ env.CONDA }}/envs/biobuild/conda-bld/*/*.tar.bz2
+          anaconda -t "$ANACONDA_API_TOKEN" upload -m ${{ env.CONDA }}/envs/biobuild/conda-bld/*/*.tar.bz2

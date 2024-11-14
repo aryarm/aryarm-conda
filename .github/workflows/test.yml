@@ -113,4 +113,4 @@ jobs:
         # if: ${{ (env.ANACONDA_API_TOKEN != '') && (github.ref == 'ref/head/master') && (steps.artifact-upload.outputs.artifact-id != '') }}
         if: ${{ (env.ANACONDA_API_TOKEN != '') && (steps.artifact-upload.outputs.artifact-id != '') }}
         run: |
-          anaconda -t "$ANACONDA_API_TOKEN" upload -m ${{ env.CONDA }}/envs/biobuild/conda-bld/*/*.tar.bz2
+          anaconda upload -m ${{ env.CONDA }}/envs/biobuild/conda-bld/*/*.tar.bz2

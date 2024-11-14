@@ -20,6 +20,10 @@ build:
     - install -m 755 finemap_v{{ version }}_x86_64 ${PREFIX}/bin/finemap
 
 requirements:
+  build:
+    - {{ stdlib("c") }}
+    - libgomp
+    - libgcc
   run:
     - {{ stdlib("c") }}
     - libgomp
@@ -44,10 +48,11 @@ about:
     Program for identifying causal SNPs and their effect sizes and heritability contributions
 
 extra:
+  # skip lints since this recipe simply repackages a binary
   skip-lints:
     - should_use_compilers
     - should_be_noarch_generic
     - version_constraints_missing_whitespace
   recipe-maintainers:
-    - danielnachun
     - aryarm
+    - danielnachun

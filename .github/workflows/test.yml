@@ -103,11 +103,13 @@ jobs:
         with:
           name: ${{ matrix.packagename }}-${{ matrix.os }}
           path: ${{ env.CONDA }}/envs/biobuild/conda-bld/
+          if-no-files-found: 'ignore'
 
-#      - name: Upload built package to Anaconda
-#        shell: bash -el {0}
-#        env:
-#          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
-#        if: ${{ env.ANACONDA_API_TOKEN == '' }}
-#        run: |
-#          anaconda upload ${{ env.CONDA }}/envs/biobuild/conda-bld/linux-64/*.tar.bz2
+      - name: Upload built package to Anaconda
+        shell: bash -el {0}
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        # if: ${{ (env.ANACONDA_API_TOKEN != '') && (github.ref == 'ref/head/master') }}
+        if: ${{ (env.ANACONDA_API_TOKEN != '') }}
+        run: |
+          anaconda upload ${{ env.CONDA }}/envs/biobuild/conda-bld/*/*.tar.bz2

@@ -20,7 +20,7 @@ jobs:
     permissions:
       pull-requests: read
     strategy:
-      fail-fast: false
+      fail-fast: true
     outputs:
       matrix: ${{ steps.output-dirs.outputs.matrix }} # contains a list of the module names encoded as a json array
     steps:
@@ -92,6 +92,12 @@ jobs:
         run:
           mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils anaconda-client
         if: steps.cache.outputs.cache-hit != 'true'
+
+      - name: Lint
+        shell: bash -el {0}
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        run: |
+          bioconda-utils lint --packages ${{ matrix.packagename }}
 
       - name: Run test
         shell: bash -el {0}

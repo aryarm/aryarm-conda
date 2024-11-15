@@ -1,6 +1,6 @@
 {% set name = "gfabase" %}
 {% set version = "0.6.0" %}
-{% set sha256 = "d17ef77d2f57ace316a7b35d910c5cd73be2a0d70ec7fcd31f2d0e3afbe1273c" %}
+{% set sha256 = "6479bc400df2bb4d1ecc2a836e9a81b8c938ed7ab996c751e08ffd9a596b2486" %}
 
 package:
   name: {{ name }}

@@ -105,15 +105,17 @@ jobs:
           bioconda-utils build ${{ (startsWith(matrix.os, 'ubuntu') && '--docker --mulled-test') || ''  }} --packages ${{ matrix.packagename }}
 
       - name: Upload built package as GitHub artifact
+        id: artifact-upload
         uses: "actions/upload-artifact@v4"
         with:
           name: ${{ matrix.packagename }}-${{ matrix.os }}
           path: ${{ env.CONDA }}/envs/biobuild/conda-bld/
+          if-no-files-found: 'ignore'
 
-#      - name: Upload built package to Anaconda
-#        shell: bash -el {0}
-#        env:
-#          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
-#        if: ${{ env.ANACONDA_API_TOKEN == '' }}
-#        run: |
-#          anaconda upload ${{ env.CONDA }}/envs/biobuild/conda-bld/linux-64/*.tar.bz2
+      - name: Upload built package to Anaconda
+        shell: bash -el {0}
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        if: ${{ (github.ref == 'ref/heads/main') && (env.ANACONDA_API_TOKEN != '') && (steps.artifact-upload.outputs.artifact-id != '') }}
+        run: |
+          anaconda upload -m ${{ env.CONDA }}/envs/biobuild/conda-bld/*/*.tar.bz2

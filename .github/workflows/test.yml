@@ -93,6 +93,11 @@ jobs:
           mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils anaconda-client
         if: steps.cache.outputs.cache-hit != 'true'
 
+      - name: Lint
+        shell: bash -el {0}
+        run: |
+          bioconda-utils lint --packages ${{ matrix.packagename }}
+
       - name: Run test
         shell: bash -el {0}
         run: |

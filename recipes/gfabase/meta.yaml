@@ -12,13 +12,13 @@ source:
 
 build:
   number: 0
+  script: "cargo install --no-track --locked --verbose --root \"${PREFIX}\" --path ."
   run_exports:
     - {{ pin_subpackage('gfabase', max_pin="x.x") }}
 
 requirements:
   build:
-    - git
-    - rust
+    - {{ compiler('rust') }}
 
 test:
   commands:
@@ -26,7 +26,8 @@ test:
 
 about:
   home: https://github.com/mlin/gfabase
-  license: Apache License 2.0
+  license: Apache-2.0
+  license_family: APACHE
   summary: GFA insert into GenomicSQLite
   description: >
     gfabase is a command-line tool for indexed storage of Graphical Fragment Assembly (GFA1) data

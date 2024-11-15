@@ -12,7 +12,9 @@ source:
 
 build:
   number: 0
-  script: "sed 's/{{ '{{GIT_SEMVER}}/' + version }}/' Cargo.toml.in > Cargo.toml && ./cargo install --no-track --locked --verbose --root \"${PREFIX}\" --path ."
+  script: |
+    sed 's/{{ '{{' }}GIT_SEMVER{{ '}}' }}/{{ version }}/' Cargo.toml.in > Cargo.toml
+    cargo install --no-track --locked --verbose --root "${PREFIX}" --path .
   run_exports:
     - {{ pin_subpackage('gfabase', max_pin="x.x") }}
 

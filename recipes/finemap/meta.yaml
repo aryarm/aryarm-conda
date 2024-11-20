@@ -18,13 +18,17 @@ build:
   script:
     - mkdir -p ${PREFIX}/bin
     - install -m 755 finemap_v{{ version }}_x86_64 ${PREFIX}/bin/finemap
+  missing_dso_whitelist:
+    - /lib64/libdl.so.2
+    - /lib64/libm.so.6
+    - $RPATH/libgomp.so.1
+    - /lib64/libgcc_s.so.1
+    - /lib64/libpthread.so.0
+    - /lib64/libc.so.6
+    - /lib64/ld-linux-x86-64.so.2
 
 requirements:
   host:
-    - {{ stdlib("c") }}
-    - libgomp
-    - libgcc
-  run:
     - {{ stdlib("c") }}
     - libgomp
     - libgcc
@@ -48,7 +52,6 @@ about:
     Program for identifying causal SNPs and their effect sizes and heritability contributions
 
 extra:
-  # skip lints since this recipe simply repackages a binary
   skip-lints:
     - should_use_compilers
     - should_be_noarch_generic

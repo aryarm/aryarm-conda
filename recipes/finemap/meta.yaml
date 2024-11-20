@@ -32,6 +32,10 @@ requirements:
     - {{ stdlib("c") }}
     - libgomp
     - libgcc
+  run:
+    - {{ stdlib("c") }}
+    - libgomp
+    - libgcc
 
 test:
   source_files:

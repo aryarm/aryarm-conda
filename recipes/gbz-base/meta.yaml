@@ -1,0 +1,49 @@
+{% set name = "gbz-base" %}
+{% set version = "0.1.0" %}
+{% set vcommit = "2347fffab2212351c666f5ba5230c5a2eafa62e1" %}
+{% set sha256 = "b29c787588fd8e8d25aabe476ba7dd11f21358e8f972a392ab87297e9e00917d" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/jltsiren/{{ name }}/archive/{{ vcommit }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  run_exports:
+    - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
+  script:
+    - RUST_BACKTRACE=1 CARGO_HOME="${BUILD_PREFIX}/.cargo" cargo build --release
+    - mkdir -p "${PREFIX}/bin"
+    - cp target/*/release/{query,gaf2db,gbz2db} "${PREFIX}/bin"
+
+requirements:
+  build:
+    - {{ compiler('rust') }}
+
+test:
+  commands:
+    - query -h
+    - gbz2db -h
+    - gaf2db -h
+
+about:
+  home: https://github.com/jltsiren/gbz-base
+  license: MIT
+  summary: Prototype for an immutable pangenome graph in SQLite
+  description: >
+    This is a prototype for storing a GBZ graph in an SQLite database.
+    It is intended for interactive applications, where you want to access
+    parts of the graph immediately without loading the entire graph into memory.
+
+extra:
+  additional-platforms:
+    - osx-arm64
+    - linux-aarch64
+  recipe-maintainers:
+    - aryarm
+  skip-lints:
+    - should_be_noarch_generic  # Rust's `cargo build` command makes this not a noarch recipe.

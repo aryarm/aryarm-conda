@@ -116,6 +116,6 @@ jobs:
         shell: bash -el {0}
         env:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
-        if: ${{ (github.ref == 'ref/heads/main') && (env.ANACONDA_API_TOKEN != '') && (steps.artifact-upload.outputs.artifact-id != '') }}
+        if: ${{ (env.ANACONDA_API_TOKEN != '') && (steps.artifact-upload.outputs.artifact-id != '') }}
         run: |
           anaconda upload -m ${{ env.CONDA }}/envs/biobuild/conda-bld/*/*.tar.bz2

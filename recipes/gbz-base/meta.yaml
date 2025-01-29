@@ -1,7 +1,7 @@
 {% set name = "gbz-base" %}
 {% set version = "0.1.0" %}
 {% set vcommit = "2347fffab2212351c666f5ba5230c5a2eafa62e1" %}
-{% set sha256 = "d17ef77d2f57ace316a7b35d910c5cd73be2a0d70ec7fcd31f2d0e3afbe1273c" %}
+{% set sha256 = "b29c787588fd8e8d25aabe476ba7dd11f21358e8f972a392ab87297e9e00917d" %}
 
 package:
   name: {{ name|lower }}

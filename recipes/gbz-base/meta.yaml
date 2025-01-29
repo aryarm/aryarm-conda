@@ -16,9 +16,10 @@ build:
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
-    - cargo build --release
-    - mv target/release/query "${PREFIX}/bin"
-    - mv target/release/gbz2db "${PREFIX}/bin"
+    - RUST_BACKTRACE=1 CARGO_HOME="${BUILD_PREFIX}/.cargo" cargo build --release
+    - ls target/release
+    - cp target/release/query "${PREFIX}/bin"
+    - cp target/release/gbz2db "${PREFIX}/bin"
 
 requirements:
   build:

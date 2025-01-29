@@ -17,9 +17,7 @@ build:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
     - RUST_BACKTRACE=1 CARGO_HOME="${BUILD_PREFIX}/.cargo" cargo build --release
-    - ls target/release
-    - cp target/release/query "${PREFIX}/bin"
-    - cp target/release/gbz2db "${PREFIX}/bin"
+    - cp target/x86_64-unknown-linux-gnu/release/{query,gfa2db,bgz2db} "${PREFIX}/bin"
 
 requirements:
   build:

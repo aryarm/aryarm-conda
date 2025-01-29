@@ -17,7 +17,8 @@ build:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
     - RUST_BACKTRACE=1 CARGO_HOME="${BUILD_PREFIX}/.cargo" cargo build --release
-    - cp target/x86_64-unknown-linux-gnu/release/{query,gfa2db,bgz2db} "${PREFIX}/bin"
+    - mkdir -p "${PREFIX}/bin"
+    - cp target/x86_64-unknown-linux-gnu/release/{query,gaf2db,gbz2db} "${PREFIX}/bin"
 
 requirements:
   build:
@@ -27,6 +28,7 @@ test:
   commands:
     - query -h
     - gbz2db -h
+    - gaf2db -h
 
 about:
   home: https://github.com/jltsiren/gbz-base

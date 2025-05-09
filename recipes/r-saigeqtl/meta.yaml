@@ -1,6 +1,7 @@
 {% set name = "r-saigeqtl" %}
 {% set version = "0.3.1" %}
 {% set vcommit = "1f100118df51a808fb36780325dab54298e78a3a" %}
+{% set sha = "1c6dce2fd03c6c7892da88857dbec749096a2b5d849e5e1d84f79a26952035ff" %}
 
 package:
   name: {{ name|lower }}
@@ -8,7 +9,7 @@ package:
 
 source:
   url: https://github.com/weizhou0/qtl/archive/{{ vcommit }}.tar.gz
-  sha256: 63e2143bc301563c480d1570e1d090a29239f130b89334303347a53a5efb7f9a
+  sha256: {{ sha }}
   patches:
     - patches/0001-use-shared-libs-in-makevars.patch
 

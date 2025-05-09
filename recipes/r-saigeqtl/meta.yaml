@@ -100,6 +100,3 @@ about:
 extra:
   recipe-maintainers:
     - weizhouUMICH
-  additional-platforms:
-    - linux-aarch64
-    - osx-arm64

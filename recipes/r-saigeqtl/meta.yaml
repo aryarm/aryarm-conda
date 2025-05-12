@@ -12,6 +12,7 @@ source:
   sha256: {{ sha }}
   patches:
     - patches/0001-use-shared-libs-in-makevars.patch
+    - patches/0002-suggest-fastSave-in-description.patch
 
 build:
   number: 0

@@ -56,6 +56,7 @@ requirements:
     - r-skat
     - r-metaskat
     - r-vctrs
+    - r-furrr
     - r-rcppnumerical
     - r-nlme
     - r-mass
@@ -79,6 +80,7 @@ requirements:
     - r-spatest
     - r-rsqlite
     - r-rcppnumerical
+    - r-furrr
 
 test:
   commands:

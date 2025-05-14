@@ -1,7 +1,7 @@
 {% set name = "gbz-base" %}
 {% set version = "0.1.0" %}
-{% set vcommit = "2347fffab2212351c666f5ba5230c5a2eafa62e1" %}
-{% set sha256 = "b29c787588fd8e8d25aabe476ba7dd11f21358e8f972a392ab87297e9e00917d" %}
+{% set vcommit = "137181dfb2ce36f354ad11a96f14bd3206d64dcf" %}
+{% set sha256 = "d345180c79fc2a9bf2c9f27fe20435cee80024bf30d348efa6a2618da72f377f" %}
 
 package:
   name: {{ name|lower }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
@@ -46,4 +46,5 @@ extra:
   recipe-maintainers:
     - aryarm
   skip-lints:
-    - should_be_noarch_generic  # Rust's `cargo build` command makes this not a noarch recipe.
+    - should_be_noarch_generic  # Rust's `cargo build` command makes this not a noarch recipe
+    - build_number_needs_reset # skip this as long as gbz-base remains officially unpublished

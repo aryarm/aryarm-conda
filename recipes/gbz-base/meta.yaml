@@ -46,4 +46,5 @@ extra:
   recipe-maintainers:
     - aryarm
   skip-lints:
-    - should_be_noarch_generic  # Rust's `cargo build` command makes this not a noarch recipe.
+    - should_be_noarch_generic  # Rust's `cargo build` command makes this not a noarch recipe
+    - build_number_needs_reset # skip this as long as gbz-base remains officially unpublished

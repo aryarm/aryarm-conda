@@ -47,3 +47,8 @@ For your convenince, you may consider doing the steps above within [a GitHub cod
 
 ## Build a package in this repository in GitHub Actions (recommended)
 Alternatively, you can skip steps 1-5 by simply forking this repository. This is probably the easiest method because it uses GitHub Actions to do all the work. Any commits to the `main` branch or to a pull request will trigger a bot to automatically rebuild packages from changed recipes and publish the built packages as [Github Artifacts](https://docs.github.com/en/actions/managing-workflow-runs/downloading-workflow-artifacts). (You will need to enable GitHub actions for your fork first: Click the Actions tab of your fork of the repository and click "I understand my workflows, go ahead and enable them.") You can then download an artifact, unzip it, and proceed with the path to the resulting directory of files in place of the `file://${CONDA_PREFIX}/conda-bld/` path in step 6.
+```
+unzip -d PACKAGE PACKAGE-*.zip # unzip the downloaded artifact from GitHub
+conda create -y -n PACKAGE -c conda-forge -c bioconda -c "file://$PWD/PACKAGE" PACKAGE
+conda activate PACKAGE
+```

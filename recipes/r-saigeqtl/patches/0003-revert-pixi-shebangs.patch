@@ -1,0 +1,28 @@
+diff --git a/extdata/makeGroupFile.R b/extdata/makeGroupFile.R
+index e1e6a2d..b531e9f 100755
+--- a/extdata/makeGroupFile.R
++++ b/extdata/makeGroupFile.R
+@@ -1 +1 @@
+-#!/usr/bin/env -S pixi run --manifest-path /app/pixi.toml Rscript
++#!/usr/bin/env Rscript
+diff --git a/extdata/step1_fitNULLGLMM_qtl.R b/extdata/step1_fitNULLGLMM_qtl.R
+index 5e5d2fa..f3e0c95 100755
+--- a/extdata/step1_fitNULLGLMM_qtl.R
++++ b/extdata/step1_fitNULLGLMM_qtl.R
+@@ -1 +1 @@
+-#!/usr/bin/env -S pixi run --manifest-path /app/pixi.toml Rscript
++#!/usr/bin/env Rscript
+diff --git a/extdata/step2_tests_qtl.R b/extdata/step2_tests_qtl.R
+index 204e637..6a9e4b0 100755
+--- a/extdata/step2_tests_qtl.R
++++ b/extdata/step2_tests_qtl.R
+@@ -1 +1 @@
+-#!/usr/bin/env -S pixi run --manifest-path /app/pixi.toml Rscript
++#!/usr/bin/env Rscript
+diff --git a/extdata/step3_gene_pvalue_qtl.R b/extdata/step3_gene_pvalue_qtl.R
+index 1fcf0a4..3ea38d6 100755
+--- a/extdata/step3_gene_pvalue_qtl.R
++++ b/extdata/step3_gene_pvalue_qtl.R
+@@ -1 +1 @@
+-#!/usr/bin/env -S pixi run --manifest-path /app/pixi.toml Rscript
++#!/usr/bin/env Rscript

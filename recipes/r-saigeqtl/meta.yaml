@@ -1,7 +1,7 @@
 {% set name = "r-saigeqtl" %}
-{% set version = "0.3.1" %}
-{% set vcommit = "1f100118df51a808fb36780325dab54298e78a3a" %}
-{% set sha = "1c6dce2fd03c6c7892da88857dbec749096a2b5d849e5e1d84f79a26952035ff" %}
+{% set version = "0.3.2" %}
+{% set vcommit = "1964c58312aed18e851e968ba20438233777f287" %}
+{% set sha = "cb9183b0ad63fee9d52da317f4d3ac8502e87fb168271d082676df390fa00517" %}
 
 package:
   name: {{ name|lower }}
@@ -13,6 +13,7 @@ source:
   patches:
     - patches/0001-use-shared-libs-in-makevars.patch
     - patches/0002-suggest-fastSave-in-description.patch
+    - patches/0003-revert-pixi-shebangs.patch
 
 build:
   number: 0
@@ -104,3 +105,6 @@ about:
 extra:
   recipe-maintainers:
     - weizhouUMICH
+  additional-platforms:
+    - linux-aarch64
+    - osx-arm64

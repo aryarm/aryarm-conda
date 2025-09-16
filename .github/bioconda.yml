@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-13, macos-latest]
+        os: [ubuntu-latest, macos-13, macos-latest, ubuntu-24.04-arm]
         packagename: ["PACKAGE"] # TODO: set this to be the name of your package
 
     steps:
@@ -90,3 +90,4 @@ jobs:
           name: ${{ matrix.packagename }}-${{ matrix.os }}
           path: ${{ env.CONDA }}/envs/biobuild/conda-bld/
           if-no-files-found: 'ignore'
+

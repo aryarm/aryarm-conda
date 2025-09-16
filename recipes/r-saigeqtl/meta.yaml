@@ -8,7 +8,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/weizhou0/qtl/archive/{{ vcommit }}.tar.gz
+  url: https://github.com/weizhou0/saigeqtl/archive/{{ vcommit }}.tar.gz
   sha256: {{ sha }}
   patches:
     - patches/0001-use-shared-libs-in-makevars.patch

@@ -1,6 +1,6 @@
 {% set name = "r-saigeqtl" %}
 {% set version = "0.3.2" %}
-{% set vcommit = "1964c58312aed18e851e968ba20438233777f287" %}
+{% set vcommit = "849ad33006c34f89221b9f9c4064bed89daa5c85" %}
 {% set sha = "cb9183b0ad63fee9d52da317f4d3ac8502e87fb168271d082676df390fa00517" %}
 
 package:

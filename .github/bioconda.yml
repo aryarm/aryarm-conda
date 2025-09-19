@@ -37,7 +37,6 @@ jobs:
           channels: conda-forge,bioconda,defaults
           auto-activate-base: false
           miniforge-version: latest
-          use-mamba: true
 
       - name: Get Date
         id: get-date
@@ -58,7 +57,7 @@ jobs:
       - name: Install biobuild environment
         shell: bash -el {0}
         run:
-          mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils anaconda-client
+          conda create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils anaconda-client
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Set package metadata

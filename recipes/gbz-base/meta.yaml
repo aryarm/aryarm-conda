@@ -1,7 +1,7 @@
 {% set name = "gbz-base" %}
 {% set version = "0.1.0" %}
-{% set vcommit = "137181dfb2ce36f354ad11a96f14bd3206d64dcf" %}
-{% set sha256 = "d345180c79fc2a9bf2c9f27fe20435cee80024bf30d348efa6a2618da72f377f" %}
+{% set vcommit = "62e5920d9295edfe27dc5be9ea542ee7e86843f7" %}
+{% set sha256 = "4111a21e931f36c3cd62d484ce1c0774da0f17a1fe3b0d87256d1db311ea0738" %}
 
 package:
   name: {{ name|lower }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:

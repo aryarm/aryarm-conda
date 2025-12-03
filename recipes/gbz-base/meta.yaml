@@ -1,18 +1,18 @@
 {% set name = "gbz-base" %}
 {% set version = "0.1.0" %}
-{% set vcommit = "62e5920d9295edfe27dc5be9ea542ee7e86843f7" %}
-{% set sha256 = "4111a21e931f36c3cd62d484ce1c0774da0f17a1fe3b0d87256d1db311ea0738" %}
+{% set vtag = "v0.1" %}
+{% set sha256 = "f482b45d67c10d2a51ce1572c44a9fe110163fa7f3bc3f53c14ec0fde6ecbc97" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/jltsiren/{{ name }}/archive/{{ vcommit }}.tar.gz
+  url: https://github.com/jltsiren/{{ name }}/archive/{{ vtag }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
-  number: 2
+  number: 3
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:

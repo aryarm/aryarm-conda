@@ -1,7 +1,7 @@
 {% set name = "gbz-base" %}
 {% set version = "0.1.0" %}
 {% set vtag = "v0.1" %}
-{% set sha256 = "4111a21e931f36c3cd62d484ce1c0774da0f17a1fe3b0d87256d1db311ea0738" %}
+{% set sha256 = "f482b45d67c10d2a51ce1572c44a9fe110163fa7f3bc3f53c14ec0fde6ecbc97" %}
 
 package:
   name: {{ name|lower }}

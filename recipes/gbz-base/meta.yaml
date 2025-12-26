@@ -1,6 +1,6 @@
 {% set name = "gbz-base" %}
-{% set version = "0.1.0" %}
-{% set vtag = "v0.1" %}
+{% set version = "0.2.0" %}
+{% set vtag = "v0.2" %}
 {% set sha256 = "f482b45d67c10d2a51ce1572c44a9fe110163fa7f3bc3f53c14ec0fde6ecbc97" %}
 
 package:
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 3
+  number: 0
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
@@ -47,4 +47,3 @@ extra:
     - aryarm
   skip-lints:
     - should_be_noarch_generic  # Rust's `cargo build` command makes this not a noarch recipe
-    - build_number_needs_reset # skip this as long as gbz-base remains officially unpublished

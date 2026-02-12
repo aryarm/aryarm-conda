@@ -8,6 +8,8 @@ package:
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 3a177cf19060945eff4044f16d5ebdc66364e72a8a3c9bd725086ba10003df96
+  patches:
+    - 0001-fix-pytest-dataloader.patch
 
 build:
   number: 2

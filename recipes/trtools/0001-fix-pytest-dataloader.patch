@@ -7,6 +7,10 @@ index 36ff215..daea6cd 100755
  cd "$loc" || exit 1
  # run unit tests
 -python -m pytest . -p trtools.testsupport.dataloader --datadir "$TMP"/trtools/testsupport
-+python -m pytest . -p "$TMP"/trtools/testsupport/dataloader.py --datadir "$TMP"/trtools/testsupport
++ln -sf "$TMP"/trtools/testsupport testsupport
++trap 'rm -f testsupport' EXIT INT TERM
++python -m pytest . -o addopts="" --doctest-modules -p trtools.testsupport.dataloader --datadir "$TMP"/trtools/testsupport
++rm -f testsupport
++trap - EXIT INT TERM
  # run command line tests
  $TMP/test/cmdline_tests.sh $TMP/example-files $TMP/trtools/testsupport/sample_vcfs/beagle $TMP/scripts/trtools_prep_beagle_vcf.sh

@@ -52,3 +52,14 @@ unzip -d PACKAGE PACKAGE-*.zip # unzip the downloaded artifact from GitHub
 conda create -y -n PACKAGE -c conda-forge -c bioconda -c "file://$PWD/PACKAGE" PACKAGE
 conda activate PACKAGE
 ```
+
+## Debugging a failed build (WIP)
+To debug the build, you can try some of the suggestions here:
+https://ubinfie.github.io/2024/08/16/debugging-bioconda-build-quickguide.html
+For example, to recreate the conda environment in which the package was built, you can run the following in a GitHub Codespace:
+```
+cd /opt/conda/envs/biobuild/conda-bld/linux-64
+conda create -y -n debug -c ./ trtools
+conda activate debug
+```
+If the build succeeded, you can also rerun the failed `bioconda-utils build` command with the `--keep-old-work` flag - although this hasn't really worked for me yet.

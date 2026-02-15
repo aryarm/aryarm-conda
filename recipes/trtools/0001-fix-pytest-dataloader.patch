@@ -2,7 +2,7 @@ diff --git a/trtools/testsupport/test_trtools.sh b/trtools/testsupport/test_trto
 index 36ff215..daea6cd 100755
 --- a/trtools/testsupport/test_trtools.sh
 +++ b/trtools/testsupport/test_trtools.sh
-@@ -45,6 +45,6 @@ echo "Location of trtools installation: $loc"
+@@ -45,7 +45,11 @@ echo "Location of trtools installation: $loc"
  echo "Running pytest ..."
  cd "$loc" || exit 1
  # run unit tests

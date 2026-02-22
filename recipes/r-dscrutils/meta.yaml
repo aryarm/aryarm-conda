@@ -1,17 +1,21 @@
 {% set name = "r-dscrutils" %}
-{% set version = '0.4.3' %}
+{% set version = '0.4.3.5' %}
+{% set vcommit = "10b643e508d8c775fc4ae2a95ed3010bbe62c3d9" %}
+{% set sha256 = "e342589960e228248244c558d2de4996d21e57bee40373333a2873f31bf41ee7" %}
 
 package:
   name: {{ name|lower }}
   version: {{version}}
 
 source:
-  url: https://github.com/stephenslab/dsc/archive/v{{ version }}.tar.gz
-  sha256: 1e422b88cc40269cb973a2b4bd12441a68f14d3c3df6f4aefb0f82de39aa1d1f
+  url: https://github.com/stephenslab/dsc/archive/{{ vcommit }}.tar.gz
+  sha256: {{ sha256 }}
 
 build:
   noarch: generic
-  number: 1
+  number: 0
+  run_exports:
+    - {{ pin_subpackage('r-dscrutils', max_pin="x.x") }}
   rpaths:
     - lib/R/lib/
     - lib/

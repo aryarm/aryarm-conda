@@ -1,7 +1,7 @@
 {% set name = "gbz-base" %}
-{% set version = "0.2.0" %}
-{% set vtag = "v0.2" %}
-{% set sha256 = "e4a541857f7785f827ce45472f83c34490d141d114e9c66ef6e49f058acba5a0" %}
+{% set version = "0.3.0" %}
+{% set vtag = "v0.3" %}
+{% set sha256 = "703dae72b3675b564bbd42bbefaa641e978bdbf06ccec327add619924b648b22" %}
 
 package:
   name: {{ name|lower }}
@@ -18,7 +18,7 @@ build:
   script:
     - RUST_BACKTRACE=1 CARGO_HOME="${BUILD_PREFIX}/.cargo" cargo build --release
     - mkdir -p "${PREFIX}/bin"
-    - cp target/*/release/{query,gaf2db,gbz2db,db2gaf} "${PREFIX}/bin"
+    - cp target/*/release/{query,gaf2db,gbz2db,db2gaf,gafsort} "${PREFIX}/bin"
 
 requirements:
   build:

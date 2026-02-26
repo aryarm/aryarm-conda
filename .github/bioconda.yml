@@ -57,7 +57,7 @@ jobs:
       - name: Install biobuild environment
         shell: bash -el {0}
         run:
-          mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils anaconda-client
+          mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Set package metadata

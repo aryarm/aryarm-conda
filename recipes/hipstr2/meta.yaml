@@ -15,12 +15,12 @@ source:
 build:
   number: 0
   run_exports:
-      - {{ pin_subpackage('hipstr2', max_pin=None) }}
+      - {{ pin_subpackage('hipstr2', max_pin="x.x") }}
   script:
     - mkdir -p "${PREFIX}/bin"
     - make version
     - make
-    - cp HipSTR "${PREFIX}/bin/"
+    - cp HipSTR DenovoFinder "${PREFIX}/bin/"
 
 requirements:
   build:

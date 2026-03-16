@@ -1,7 +1,7 @@
 {% set name = "HipSTR2" %}
 {% set version = "0.7" %}
 {% set vcommit = "b400a624705b309339457d513e100fcd828dd6ed" %}
-{% set sha = "SHA256" %}
+{% set sha = "d10ab291d047462e393b071ae247c17c84cfc536eff96de562bba338b47d5c59" %}
 {% set username = "gymrek-lab" %}
 
 package:

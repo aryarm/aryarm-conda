@@ -30,6 +30,7 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - zlib
+    - bzip2
     - htslib
 
 

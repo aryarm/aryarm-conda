@@ -1,0 +1,49 @@
+{% set name = "HipSTR2" %}
+{% set version = "0.7" %}
+{% set vcommit = "b400a624705b309339457d513e100fcd828dd6ed" %}
+{% set sha = "SHA256" %}
+{% set username = "gymrek-lab" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/{{ username }}/{{ name }}/archive/{{ vcommit }}.tar.gz
+  sha256: {{ sha }}
+
+build:
+  number: 0
+  run_exports:
+      - {{ pin_subpackage('hipstr2', max_pin=None) }}
+  script:
+    - mkdir -p "${PREFIX}/bin"
+    - make version
+    - make
+    - cp HipSTR "${PREFIX}/bin/"
+
+requirements:
+  build:
+    - make
+    - {{ compiler('cxx') }}
+  host:
+    - htslib
+
+
+test:
+  commands:
+    - HipSTR --help
+
+about:
+  home: https://github.com/{{ username }}/{{ name }}
+  license: GPL-2
+  license_file: LICENSE
+  summary: Haplotype inference and phasing for Short Tandem Repeats
+  description: Genotype and phase short tandem repeats using Illumina whole-genome sequencing data
+
+extra:
+  recipe-maintainers:
+    - {{ username }}
+  additional-platforms:
+    - linux-aarch64
+    - osx-arm64

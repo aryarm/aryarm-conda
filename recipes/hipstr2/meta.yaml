@@ -13,7 +13,7 @@ source:
   sha256: {{ sha }}
   patches:
     - patches/0001-use-version-from-config.patch
-
+    - patches/0002-include-cstdint-in-region.patch
 build:
   number: 0
   run_exports:
@@ -29,6 +29,7 @@ requirements:
     - make
     - {{ compiler('cxx') }}
   host:
+    - zlib
     - htslib
 
 

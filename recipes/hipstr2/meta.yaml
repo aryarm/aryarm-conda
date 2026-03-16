@@ -1,7 +1,7 @@
 {% set name = "HipSTR2" %}
 {% set version = "0.7" %}
-{% set vcommit = "b400a624705b309339457d513e100fcd828dd6ed" %}
-{% set sha = "d10ab291d047462e393b071ae247c17c84cfc536eff96de562bba338b47d5c59" %}
+{% set vcommit = "2466f6630ac9b096611256d5e79530a2bc6fd56b" %}
+{% set sha = "d209906e479bdd9d8f6baf46120ffdbdce28656f1fc1e1a4f4965daf44d4d769" %}
 {% set username = "gymrek-lab" %}
 
 package:
@@ -11,6 +11,8 @@ package:
 source:
   url: https://github.com/{{ username }}/{{ name }}/archive/{{ vcommit }}.tar.gz
   sha256: {{ sha }}
+  patches:
+    - patches/0001-use-version-from-config.patch
 
 build:
   number: 0

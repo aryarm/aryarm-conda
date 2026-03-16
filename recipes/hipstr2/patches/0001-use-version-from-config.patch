@@ -1,0 +1,22 @@
+diff --git a/Makefile b/Makefile
+index 0f7ea29..4001a35 100644
+--- a/Makefile
++++ b/Makefile
+@@ -43,7 +43,7 @@ all: HipSTR DenovoFinder test/fast_ops_test test/haplotype_test test/read_vcf_al
+ static-dist:
+ 	rm -f HipSTR
+ 	$(MAKE) STATIC=1
+-	( VER="$$(git describe --abbrev=7 --dirty --always --tags)" ;\
++	( VER="$$(grep 'version:' _config.yml | awk -F': *' '{print $2}')" ;\
+ 	  DST="HipSTR-$${VER}-static-$$(uname -s)-$$(uname -m)" ; \
+ 	  mkdir "$${DST}" && \
+             mkdir "$${DST}/scripts" && \
+@@ -54,7 +54,7 @@ static-dist:
+         )
+ 
+ version:
+-	git describe --abbrev=7 --dirty --always --tags | awk '{print "#include \"version.h\""; print "const std::string VERSION = \""$$0"\";"}' > src/version.cpp
++	grep 'version:' _config.yml | awk -F': *' '{print $2}' | awk '{print "#include \"version.h\""; print "const std::string VERSION = \""$$0"\";"}' > src/version.cpp
+ 
+ # Clean the generated files of the main project only
+ .PHONY: clean

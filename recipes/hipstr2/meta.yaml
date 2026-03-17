@@ -1,0 +1,54 @@
+{% set name = "HipSTR2" %}
+{% set version = "0.7" %}
+{% set vcommit = "2466f6630ac9b096611256d5e79530a2bc6fd56b" %}
+{% set sha = "d209906e479bdd9d8f6baf46120ffdbdce28656f1fc1e1a4f4965daf44d4d769" %}
+{% set username = "gymrek-lab" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/{{ username }}/{{ name }}/archive/{{ vcommit }}.tar.gz
+  sha256: {{ sha }}
+  patches:
+    - patches/0001-use-version-from-config.patch
+    - patches/0002-include-cstdint-in-region.patch
+build:
+  number: 0
+  run_exports:
+      - {{ pin_subpackage('hipstr2', max_pin="x.x") }}
+  script:
+    - mkdir -p "${PREFIX}/bin"
+    - make version
+    - make HipSTR DenovoFinder
+    - cp HipSTR DenovoFinder "${PREFIX}/bin/"
+
+requirements:
+  build:
+    - make
+    - {{ compiler('c') }} # for bundled cephes
+    - {{ compiler('cxx') }}
+  host:
+    - xz
+    - zlib
+    - bzip2
+
+test:
+  commands:
+    - HipSTR --help
+    - DenovoFinder --help
+
+about:
+  home: https://github.com/{{ username }}/{{ name }}
+  license: GPL-2
+  license_file: LICENSE
+  summary: Haplotype inference and phasing for Short Tandem Repeats
+  description: Genotype and phase short tandem repeats using Illumina whole-genome sequencing data
+
+extra:
+  recipe-maintainers:
+    - {{ username }}
+  additional-platforms:
+    - linux-aarch64
+    - osx-arm64

@@ -29,9 +29,9 @@ Scripts, recipes, and docs for conda packages. Inspired by [jdblischak/jdb-conda
     ```
     conda activate biobuild
     ```
-5. Build the package
+5. Build the package. (Use `--keep-old-work` to help with debugging issues that might arise.)
     ```
-    bioconda-utils build --packages PACKAGE
+    bioconda-utils build --keep-old-work --packages PACKAGE
     ```
 6. Install the package in a new environment
     ```
@@ -53,13 +53,18 @@ conda create -y -n PACKAGE -c conda-forge -c bioconda -c "file://$PWD/PACKAGE" P
 conda activate PACKAGE
 ```
 
-## Debugging a failed build (WIP)
+## Debugging a failed build in GitHub codespaces
 To debug the build, you can try some of the suggestions here:
 https://ubinfie.github.io/2024/08/16/debugging-bioconda-build-quickguide.html
-For example, to recreate the conda environment in which the package was built, you can run the following in a GitHub Codespace:
+
+For example, if the build failed but you ran `bioconda-utils build` with the `--keep-old-work` argument, you can just directly activate the build environment.
 ```
-cd /opt/conda/envs/biobuild/conda-bld/linux-64
-conda create -y -n debug -c ./ trtools
-conda activate debug
+conda activate "$(ls -td /opt/conda/envs/biobuild/conda-bld/*/_build_env | head -n1)"
+# you can edit the source files here, as needed
+cd "$(ls -td /opt/conda/envs/biobuild/conda-bld/*/work | head -n1)"
 ```
-If the build succeeded, you can also rerun the failed `bioconda-utils build` command with the `--keep-old-work` flag - although this hasn't really worked for me yet.
+And with `--keep-old-work`, you can rerun the build directly too.
+```
+conda activate biobuild
+conda-build --keep-old-work --override-channels --no-anaconda-upload -c conda-forge -c bioconda -c defaults -e /opt/conda/envs/biobuild/conda_build_config.yaml -e /opt/conda/envs/biobuild/lib/python"$(python -V | sed 's/Python //' | cut -f-2 -d.)"/site-packages/bioconda_utils/bioconda_utils-conda_build_config.yaml recipes/PACKAGE/meta.yaml
+```

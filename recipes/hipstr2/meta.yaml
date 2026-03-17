@@ -21,12 +21,13 @@ build:
   script:
     - mkdir -p "${PREFIX}/bin"
     - make version
-    - make
+    - make HipSTR DenovoFinder
     - cp HipSTR DenovoFinder "${PREFIX}/bin/"
 
 requirements:
   build:
     - make
+    - {{ compiler('c') }} # for bundled cephes
     - {{ compiler('cxx') }}
   host:
     - zlib

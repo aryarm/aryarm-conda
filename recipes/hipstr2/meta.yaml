@@ -30,14 +30,14 @@ requirements:
     - {{ compiler('c') }} # for bundled cephes
     - {{ compiler('cxx') }}
   host:
+    - xz
     - zlib
     - bzip2
-    - xz
-
 
 test:
   commands:
     - HipSTR --help
+    - DenovoFinder --help
 
 about:
   home: https://github.com/{{ username }}/{{ name }}

@@ -31,7 +31,7 @@ requirements:
   host:
     - zlib
     - bzip2
-    - htslib
+    - xz
 
 
 test:

@@ -22,7 +22,7 @@ build:
   script:
     - mkdir -p "${PREFIX}/bin"
     - make version
-    - STATIC=1 make HipSTR DenovoFinder
+    - make HipSTR DenovoFinder
     - cp HipSTR DenovoFinder "${PREFIX}/bin/"
 
 requirements:

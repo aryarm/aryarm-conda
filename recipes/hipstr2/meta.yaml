@@ -1,7 +1,7 @@
 {% set name = "HipSTR2" %}
 {% set version = "0.7" %}
-{% set vcommit = "2466f6630ac9b096611256d5e79530a2bc6fd56b" %}
-{% set sha = "d209906e479bdd9d8f6baf46120ffdbdce28656f1fc1e1a4f4965daf44d4d769" %}
+{% set vcommit = "ad1e9b8b432d35407948262798bd0895f3e5a6c8" %}
+{% set sha = "38fce0bb1b78bc3e17e2c25cc2d94086f8fb2ad78566318ed097d41574700825" %}
 {% set username = "gymrek-lab" %}
 
 package:
@@ -13,26 +13,28 @@ source:
   sha256: {{ sha }}
   patches:
     - patches/0001-use-version-from-config.patch
-    - patches/0002-include-cstdint-in-region.patch
+    - patches/0002-adapt-src-for-newest-htslib.patch
 build:
-  number: 0
+  number: 1
   run_exports:
       - {{ pin_subpackage('hipstr2', max_pin="x.x") }}
+  skip: true  # [win]
   script:
     - mkdir -p "${PREFIX}/bin"
     - make version
-    - make HipSTR DenovoFinder
+    - STATIC=1 make HipSTR DenovoFinder
     - cp HipSTR DenovoFinder "${PREFIX}/bin/"
 
 requirements:
   build:
     - make
-    - {{ compiler('c') }} # for bundled cephes
+    - {{ compiler('c') }} # for bundled cephes and htslib
     - {{ compiler('cxx') }}
   host:
     - xz
     - zlib
     - bzip2
+    - htslib
 
 test:
   commands:

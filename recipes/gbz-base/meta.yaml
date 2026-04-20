@@ -13,9 +13,11 @@ source:
 
 build:
   number: 0
+  skip: True  # [win]
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - RUST_BACKTRACE=1 CARGO_PROFILE_RELEASE_STRIP=symbols CARGO_PROFILE_RELEASE_LTO=fat cargo install --no-track --locked --root "${PREFIX}" --path .
 
 requirements:
@@ -23,6 +25,7 @@ requirements:
     - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - {{ compiler('rust') }}
+    - cargo-bundle-licenses
 
 test:
   commands:
@@ -30,10 +33,14 @@ test:
     - gbz2db -h
     - gaf2db -h
     - db2gaf -h
+    - gafsort -h
 
 about:
   home: https://github.com/jltsiren/gbz-base
   license: MIT
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
   summary: Prototype for an immutable pangenome graph in SQLite
   description: >
     This is a prototype for storing a GBZ graph in an SQLite database.
@@ -46,5 +53,3 @@ extra:
     - linux-aarch64
   recipe-maintainers:
     - aryarm
-  skip-lints:
-    - should_be_noarch_generic  # Rust's `cargo build` command makes this not a noarch recipe

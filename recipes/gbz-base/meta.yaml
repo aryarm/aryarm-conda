@@ -16,14 +16,14 @@ build:
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
-    - RUST_BACKTRACE=1 CARGO_HOME="${BUILD_PREFIX}/.cargo" cargo build --release
-    - mkdir -p "${PREFIX}/bin"
-    - cp target/*/release/{query,gaf2db,gbz2db,db2gaf} "${PREFIX}/bin"
+    - RUST_BACKTRACE=1 CARGO_PROFILE_RELEASE_STRIP=symbols CARGO_PROFILE_RELEASE_LTO=fat cargo auditable install --locked --no-track --bins --root ${PREFIX} --path .
 
 requirements:
   build:
     - {{ stdlib('c') }}
+    - {{ compiler('c') }}
     - {{ compiler('rust') }}
+    - cargo-auditable
 
 test:
   commands:

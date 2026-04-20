@@ -16,7 +16,7 @@ build:
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
-    - RUST_BACKTRACE=1 CARGO_PROFILE_RELEASE_STRIP=symbols CARGO_PROFILE_RELEASE_LTO=fat cargo auditable install --locked --no-track --bins --root ${PREFIX} --path .
+    - RUST_BACKTRACE=1 CARGO_PROFILE_RELEASE_STRIP=symbols CARGO_PROFILE_RELEASE_LTO=fat cargo install --no-track --locked --root "${PREFIX}" --path .
 
 requirements:
   build:

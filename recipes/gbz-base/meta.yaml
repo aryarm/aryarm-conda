@@ -1,7 +1,7 @@
 {% set name = "gbz-base" %}
-{% set version = "0.3.0" %}
-{% set vtag = "v0.3" %}
-{% set sha256 = "d4888aa8ecb35f8315a9d7e99383cf2c6408cc89f1a0667ffc4c5517e8057fd6" %}
+{% set version = "0.4.0" %}
+{% set vtag = "v0.4" %}
+{% set sha256 = "78a3d16056296c49e4a8649ded5b7f663688e2414ea0b0d23a479f3a1aeeaf14" %}
 
 package:
   name: {{ name|lower }}
@@ -13,16 +13,19 @@ source:
 
 build:
   number: 0
+  skip: True  # [win]
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
-    - RUST_BACKTRACE=1 CARGO_HOME="${BUILD_PREFIX}/.cargo" cargo build --release
-    - mkdir -p "${PREFIX}/bin"
-    - cp target/*/release/{query,gaf2db,gbz2db,db2gaf} "${PREFIX}/bin"
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+    - RUST_BACKTRACE=1 CARGO_PROFILE_RELEASE_STRIP=symbols CARGO_PROFILE_RELEASE_LTO=fat cargo install --no-track --locked --root "${PREFIX}" --path .
 
 requirements:
   build:
+    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
     - {{ compiler('rust') }}
+    - cargo-bundle-licenses
 
 test:
   commands:
@@ -30,10 +33,14 @@ test:
     - gbz2db -h
     - gaf2db -h
     - db2gaf -h
+    - gafsort -h
 
 about:
   home: https://github.com/jltsiren/gbz-base
   license: MIT
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
   summary: Prototype for an immutable pangenome graph in SQLite
   description: >
     This is a prototype for storing a GBZ graph in an SQLite database.
@@ -46,5 +53,3 @@ extra:
     - linux-aarch64
   recipe-maintainers:
     - aryarm
-  skip-lints:
-    - should_be_noarch_generic  # Rust's `cargo build` command makes this not a noarch recipe

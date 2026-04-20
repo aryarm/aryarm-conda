@@ -123,4 +123,4 @@ jobs:
           # Switch to base to run the upload
           conda activate base
 
-          anaconda upload -f -m ${{ env.CONDA }}/envs/biobuild/conda-bld/*/${{ matrix.packagename }}*.conda
+          anaconda upload -m ${{ env.CONDA }}/envs/biobuild/conda-bld/*/${{ matrix.packagename }}*.conda

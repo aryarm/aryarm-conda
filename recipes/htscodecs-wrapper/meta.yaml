@@ -1,0 +1,49 @@
+{% set name = "htscodecs-wrapper" %}
+{% set version = "0.1.0" %}
+{% set vtag = "v0.1" %}
+{% set sha256 = "78a3d16056296c49e4a8649ded5b7f663688e2414ea0b0d23a479f3a1aeeaf14" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/jltsiren/{{ name }}/archive/{{ vtag }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  skip: True  # [win]
+  run_exports:
+    - {{ pin_subpackage('htscodecs-wrapper', max_pin="x.x") }}
+  script:
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+    - RUST_BACKTRACE=1 CARGO_PROFILE_RELEASE_STRIP=symbols CARGO_PROFILE_RELEASE_LTO=fat cargo install --no-track --locked --root "${PREFIX}" --path .
+
+requirements:
+  build:
+    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
+    - {{ compiler('rust') }}
+    - cargo-bundle-licenses
+
+test:
+  commands:
+    - cargo test
+
+about:
+  home: https://github.com/jltsiren/htscodecs-wrapper
+  license: MIT
+  license_file:
+    - LICENSE
+    - THIRDPARTY.yml
+  summary: Rust wrapper for HTSlib compression codecs
+  description: >
+    This is a minimal Rust wrapper for some HTSlib compression codecs. Only codecs used in GAF-base are compiled.
+
+extra:
+  additional-platforms:
+    - osx-arm64
+    - linux-aarch64
+  recipe-maintainers:
+    - aryarm

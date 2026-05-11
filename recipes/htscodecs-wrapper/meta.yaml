@@ -1,7 +1,7 @@
 {% set name = "htscodecs-wrapper" %}
 {% set version = "0.1.0" %}
 {% set vtag = "v0.1" %}
-{% set sha256 = "78a3d16056296c49e4a8649ded5b7f663688e2414ea0b0d23a479f3a1aeeaf14" %}
+{% set sha256 = "e8ab279dd88373de2e0b3e308f75ece320653634abdd8aaca92370fcbec488c6" %}
 
 package:
   name: {{ name|lower }}

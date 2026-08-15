@@ -1,7 +1,7 @@
 {% set name = "gbz-base" %}
-{% set version = "0.4.0" %}
-{% set vtag = "v0.4" %}
-{% set sha256 = "78a3d16056296c49e4a8649ded5b7f663688e2414ea0b0d23a479f3a1aeeaf14" %}
+{% set version = "0.5.1" %}
+{% set vtag = "v0.5.1" %}
+{% set sha256 = "725274aaa2d96eacf4e83a19686de6eb077d27fab9c508127bf56d1ee5f28dc2" %}
 
 package:
   name: {{ name|lower }}
@@ -17,6 +17,8 @@ build:
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
+    - export CFLAGS="${CFLAGS} -mavx -mavx2"  # [x86_64]
+    - export RUSTFLAGS="${RUSTFLAGS} -C target-feature=+avx,+avx2"  # [x86_64]
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - RUST_BACKTRACE=1 CARGO_PROFILE_RELEASE_STRIP=symbols CARGO_PROFILE_RELEASE_LTO=fat cargo install --no-track --locked --root "${PREFIX}" --path .
 
@@ -29,10 +31,10 @@ requirements:
 
 test:
   commands:
-    - query -h
     - gbz2db -h
     - gaf2db -h
     - db2gaf -h
+    - query -h
     - gafsort -h
 
 about:

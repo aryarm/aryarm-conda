@@ -1,6 +1,6 @@
 {% set name = "gbz-base" %}
-{% set version = "0.5.1" %}
-{% set vtag = "v0.5.1" %}
+{% set version = "0.6.0" %}
+{% set vtag = "v0.6.0" %}
 {% set sha256 = "725274aaa2d96eacf4e83a19686de6eb077d27fab9c508127bf56d1ee5f28dc2" %}
 
 package:
@@ -31,11 +31,8 @@ requirements:
 
 test:
   commands:
-    - gbz2db -h
-    - gaf2db -h
-    - db2gaf -h
-    - query -h
-    - gafsort -h
+    - gbz-base -h
+    - gaf-base -h
 
 about:
   home: https://github.com/jltsiren/gbz-base

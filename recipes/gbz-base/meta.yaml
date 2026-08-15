@@ -17,6 +17,8 @@ build:
   run_exports:
     - {{ pin_subpackage('gbz-base', max_pin="x.x") }}
   script:
+    - CFLAGS="${CFLAGS} -mavx -mavx2"  # [linux64 or osx64]
+    - RUSTFLAGS="${RUSTFLAGS} -C target-feature=+avx,+avx2"  # [linux64 or osx64]
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - RUST_BACKTRACE=1 CARGO_PROFILE_RELEASE_STRIP=symbols CARGO_PROFILE_RELEASE_LTO=fat cargo install --no-track --locked --root "${PREFIX}" --path .
 

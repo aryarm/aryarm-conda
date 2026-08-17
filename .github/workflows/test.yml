@@ -130,9 +130,9 @@ jobs:
     name: Publish to Anaconda
     needs: [get_dirs, build]
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch' && needs.get_dirs.outputs.matrix != '[]' && env.ANACONDA_API_TOKEN != '' }}
     env:
       ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
-    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch' && needs.get_dirs.outputs.matrix != '[]' && secrets.ANACONDA_API_TOKEN != '' }}
     steps:
       - name: Download all built artifacts
         uses: actions/download-artifact@v8

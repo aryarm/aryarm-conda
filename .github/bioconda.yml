@@ -12,6 +12,12 @@ on:
     branches: [ "main" ]
     paths-ignore:
       - 'README.md'
+  workflow_dispatch:
+    inputs:
+      packagename:
+        description: 'Package name to build'
+        required: true
+        type: string
 
 jobs:
   build:
@@ -19,7 +25,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     permissions:
       contents: read
-      packages: write
     strategy:
       fail-fast: false
       matrix:
@@ -47,8 +52,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ${{ env.CONDA }}/envs
-          key:
-            conda-${{ runner.os }}--${{ runner.arch }}--${{ steps.get-date.outputs.today }}-${{ env.CACHE_NUMBER }}
+          key: conda-${{ runner.os }}--${{ runner.arch }}--${{ steps.get-date.outputs.today }}-${{ env.CACHE_NUMBER }}
         env:
           # Increase this value to reset cache if needed
           CACHE_NUMBER: 0
@@ -56,8 +60,7 @@ jobs:
 
       - name: Install biobuild environment
         shell: bash -el {0}
-        run:
-          mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils
+        run: mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Set package metadata
@@ -81,12 +84,12 @@ jobs:
       - name: Run test
         shell: bash -el {0}
         run: |
-          bioconda-utils build ${{ (startsWith(matrix.os, 'ubuntu') && format('--docker --mulled-test --docker-base-image quay.io/bioconda/bioconda-utils-build-env-cos7{0}', (endsWith(matrix.os, '-arm') && '-aarch64') || '')) || ''  }} --packages ${{ matrix.packagename }}
+          bioconda-utils build ${{ (startsWith(matrix.os, 'ubuntu') && format('--docker --mulled-test --docker-base-image quay.io/bioconda/bioconda-utils-build-env-cos7{0}', (endsWith(matrix.os, '-arm') && '-aarch64') || '')) || '' }} --packages ${{ matrix.packagename }}
       - name: Upload built package as GitHub artifact
         id: artifact-upload
-        uses: "actions/upload-artifact@v7"
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.packagename }}-${{ matrix.os }}
           path: ${{ env.CONDA }}/envs/biobuild/conda-bld/
-          if-no-files-found: 'ignore'
+          if-no-files-found: ignore
 

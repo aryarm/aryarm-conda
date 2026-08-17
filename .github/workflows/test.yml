@@ -6,10 +6,16 @@ on:
     tags: [ 'v*.*.*' ]
     paths-ignore:
       - 'README.md'
+      - '.github/bioconda.yml'
+      - '.devcontainer.json'
+      - 'LICENSE'
   pull_request:
     branches: [ "main" ]
     paths-ignore:
       - 'README.md'
+      - '.github/bioconda.yml'
+      - '.devcontainer.json'
+      - 'LICENSE'
   workflow_dispatch:
     inputs:
       packagename:
@@ -121,10 +127,12 @@ jobs:
           if-no-files-found: ignore
 
   publish:
-    name: Publish to Anaconda.org
+    name: Publish to Anaconda
     needs: [get_dirs, build]
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' && needs.get_dirs.outputs.matrix != '[]' }}
+    env:
+      ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch' && needs.get_dirs.outputs.matrix != '[]' && secrets.ANACONDA_API_TOKEN != '' }}
     steps:
       - name: Download all built artifacts
         uses: actions/download-artifact@v8

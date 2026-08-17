@@ -37,13 +37,6 @@ jobs:
       matrix: ${{ steps.output-dirs-manual.outputs.matrix || steps.output-dirs-auto.outputs.matrix }}
       has_token: ${{ steps.token.outputs.has_token }}
     steps:
-      - name: Check Anaconda token
-        id: token
-        env:
-          TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
-        run: |
-          echo "has_token=${{ env.TOKEN != '' }}" >> $GITHUB_OUTPUT
-    steps:
       - name: Checkout
         uses: actions/checkout@v6
 
@@ -74,7 +67,7 @@ jobs:
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
       - name: Check for secret token
-        id: check-token
+        id: token
         env:
           TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
         run: |

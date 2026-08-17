@@ -35,6 +35,14 @@ jobs:
     outputs:
        # contains a list of the module names encoded as a json array
       matrix: ${{ steps.output-dirs-manual.outputs.matrix || steps.output-dirs-auto.outputs.matrix }}
+      has_token: ${{ steps.token.outputs.has_token }}
+    steps:
+      - name: Check Anaconda token
+        id: token
+        env:
+          TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        run: |
+          echo "has_token=${{ env.TOKEN != '' }}" >> $GITHUB_OUTPUT
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -64,6 +72,13 @@ jobs:
           matrix=$(jq -cn --arg pkg "${{ inputs.packagename }}" '[$pkg]')
           echo "$matrix"
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+      - name: Check for secret token
+        id: check-token
+        env:
+          TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        run: |
+          echo "has_token=${{ env.TOKEN != '' }}" >> $GITHUB_OUTPUT
 
   build:
     name: Build on ${{ matrix.os }}
@@ -130,7 +145,7 @@ jobs:
     name: Publish to Anaconda
     needs: [get_dirs, build]
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch' && needs.get_dirs.outputs.matrix != '[]' && env.ANACONDA_API_TOKEN != '' }}
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch' && needs.get_dirs.outputs.matrix != '[]' && needs.get_dirs.outputs.has_token == 'true' }}
     env:
       ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
     steps:

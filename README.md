@@ -52,6 +52,12 @@ unzip -d PACKAGE PACKAGE-*.zip # unzip the downloaded artifact from GitHub
 conda create -y -n PACKAGE -c conda-forge -c bioconda -c "file://$PWD/PACKAGE" PACKAGE
 conda activate PACKAGE
 ```
+### Publishing to Anaconda
+With GitHub Actions, you can also enable automatic publishing of any packages built on the `main` branch. Follow these steps to get set up.
+1. [Create an Anaconda.org account](https://auth.anaconda.com/ui/registration) if you don't have one already. Make it the same username as your GitHub username
+2. Follow [these instructions](https://www.anaconda.com/docs/anaconda-org/admin-guide/tokens#anaconda-org) to create an Anaconda API token on [Anaconda.org](https://anaconda.org) (not Anaconda<b>.com</b>). When setting the required scopes, make sure you check the boxes for "Allow read access to the API site" and "Allow write access to the API site"
+3. [Copy the API token into a GitHub actions secret](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets#creating-secrets-for-a-repository) on your fork of the repository. Name the secret ANACONDA_API_TOKEN
+4. Create a pull request on your fork of the repository targeting the main branch. Merge the pull request once the builds are passing. Upon merging it into the `main` branch, it should automatically publish to your Anaconda.org channel
 
 ## Debugging a failed build in GitHub codespaces
 To debug the build, you can try some of the suggestions here:

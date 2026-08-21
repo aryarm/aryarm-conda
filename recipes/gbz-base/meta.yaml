@@ -1,14 +1,14 @@
 {% set name = "gbz-base" %}
 {% set version = "0.6.0" %}
-{% set vtag = "v0.6.0" %}
-{% set sha256 = "725274aaa2d96eacf4e83a19686de6eb077d27fab9c508127bf56d1ee5f28dc2" %}
+{% set vtag = "v0.6" %}
+{% set sha256 = "bd7c13cefdce110439ad213f959b00c550768cecc517519c7bd1268d237367c1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/jltsiren/{{ name }}/archive/{{ vtag }}.tar.gz
+  url: https://github.com/jltsiren/{{ name }}/archive/refs/tags/{{ vtag }}.tar.gz
   sha256: {{ sha256 }}
 
 build:

@@ -149,7 +149,7 @@ jobs:
           merge-multiple: true
 
       - name: Publish all packages to Anaconda
-        uses: anaconda/actions/upload-package@latest
+        uses: anaconda/actions/upload-package@v0.3.1
         with:
           token: ${{ secrets.ANACONDA_API_TOKEN }}
           channel: ${{ github.actor }} # assumes your Anaconda.org username is the same as your GitHub username

@@ -138,7 +138,7 @@ jobs:
     name: Publish to Anaconda
     needs: [get_dirs, build]
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch' && needs.get_dirs.outputs.matrix != '[]' && needs.get_dirs.outputs.has_token == 'true' }}
+    if: ${{ github.ref == 'refs/heads/main' && needs.get_dirs.outputs.matrix != '[]' && needs.get_dirs.outputs.has_token == 'true' }}
     env:
       ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
     steps:

@@ -114,7 +114,7 @@ jobs:
 
       - name: Install biobuild environment
         shell: bash -el {0}
-        run: mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults bioconda-utils
+        run: mamba create -y -n biobuild -c conda-forge -c bioconda -c nodefaults 'bioconda-utils>=5.0.0'
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Lint

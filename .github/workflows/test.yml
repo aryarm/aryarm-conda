@@ -94,7 +94,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v4
         with:
           activate-environment: biobuild
-          channels: conda-forge,bioconda,defaults
+          channels: conda-forge,bioconda
           miniforge-version: latest
           use-mamba: true
 
@@ -119,7 +119,7 @@ jobs:
 
       - name: Lint
         shell: bash -el {0}
-        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: bioconda-utils lint --packages ${{ matrix.packagename }}
 
       - name: Run test
